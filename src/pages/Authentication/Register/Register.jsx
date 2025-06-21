@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { Link } from "react-router"; 
 
 const Register = () => {
   const {
@@ -9,24 +11,26 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const password = watch("password");
+
   const onSubmit = (data) => {
     console.log("Registration Data:", data);
   };
 
-  const password = watch("password");
-
   return (
     <div className="max-w-md mx-auto mt-16 px-4">
       <h2 className="text-3xl font-bold text-center mb-6">Create an Account</h2>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-base-200 p-6 rounded-lg shadow-md space-y-5"
       >
         {/* Name Field */}
         <div>
-          <label className="label font-medium" htmlFor="name">
-            Name
-          </label>
+          <label className="label font-medium" htmlFor="name">Name</label>
           <input
             id="name"
             type="text"
@@ -49,9 +53,7 @@ const Register = () => {
 
         {/* Email Field */}
         <div>
-          <label className="label font-medium" htmlFor="email">
-            Email
-          </label>
+          <label className="label font-medium" htmlFor="email">Email</label>
           <input
             id="email"
             type="email"
@@ -74,29 +76,34 @@ const Register = () => {
 
         {/* Password Field */}
         <div>
-          <label className="label font-medium" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-              pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/,
-                message:
-                  "Password must include uppercase, lowercase, and a special character",
-              },
-            })}
-            className={`input input-bordered w-full ${
-              errors.password ? "input-error" : ""
-            }`}
-            placeholder="Create a password"
-          />
+          <label className="label font-medium" htmlFor="password">Password</label>
+          <div className="relative">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/,
+                  message: "Must include uppercase, lowercase, and special character",
+                },
+              })}
+              className={`input input-bordered w-full pr-10 ${
+                errors.password ? "input-error" : ""
+              }`}
+              placeholder="Create a password"
+            />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-lg text-gray-500"
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </span>
+          </div>
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">
               {errors.password.message}
@@ -106,22 +113,28 @@ const Register = () => {
 
         {/* Confirm Password Field */}
         <div>
-          <label className="label font-medium" htmlFor="confirmPassword">
-            Confirm Password
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-            className={`input input-bordered w-full ${
-              errors.confirmPassword ? "input-error" : ""
-            }`}
-            placeholder="Repeat your password"
-          />
+          <label className="label font-medium" htmlFor="confirmPassword">Confirm Password</label>
+          <div className="relative">
+            <input
+              id="confirmPassword"
+              type={showConfirm ? "text" : "password"}
+              {...register("confirmPassword", {
+                required: "Please confirm your password",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
+              className={`input input-bordered w-full pr-10 ${
+                errors.confirmPassword ? "input-error" : ""
+              }`}
+              placeholder="Repeat your password"
+            />
+            <span
+              onClick={() => setShowConfirm(!showConfirm)}
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-lg text-gray-500"
+            >
+              {showConfirm ? <FiEyeOff /> : <FiEye />}
+            </span>
+          </div>
           {errors.confirmPassword && (
             <p className="text-red-500 text-sm mt-1">
               {errors.confirmPassword.message}
@@ -133,6 +146,14 @@ const Register = () => {
         <button type="submit" className="btn btn-primary text-black w-full">
           Register
         </button>
+
+        {/* Login Redirect Link */}
+        <p className="text-sm text-center mt-4">
+          Already have an account?{" "}
+          <Link to="/login" className="text-secondary font-medium hover:underline">
+            Login here
+          </Link>
+        </p>
       </form>
     </div>
   );
