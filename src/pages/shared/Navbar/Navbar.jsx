@@ -3,11 +3,12 @@ import ProFastLogo from "../Profast/ProfastLogo";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import useTheme from "../Theme/useTheme";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [showModal, setShowModal] = useState(false);
-
+ const { theme, toggleTheme } = useTheme();
   const handleLogout = () => {
     logOut()
       .then(() => {
@@ -32,7 +33,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar shadow-sm bg-neutral text-neutral-content">
+    <div className="navbar sticky top-0 z-50 shadow-sm bg-secondary">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -73,7 +74,7 @@ const Navbar = () => {
             <span className="mr-4 hidden md:inline-block">
               {user.displayName || user.email}
             </span>
-            {/* Show modal instead of directly logging out */}
+        
             <button
               onClick={() => setShowModal(true)}
               className="btn btn-sm btn-outline btn-error rounded-full px-6"
@@ -91,7 +92,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Logout Modal - Should be outside the conditional render block */}
+      
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-sm">
@@ -113,6 +114,13 @@ const Navbar = () => {
           </div>
         </div>
       )}
+      <input
+        type="checkbox"
+        value="dark"
+        className="toggle theme-controller ml-3 text-white"
+        checked={theme === "dark"}
+        onChange={(e) => toggleTheme(e.target.checked)}
+      />
     </div>
   );
 };
