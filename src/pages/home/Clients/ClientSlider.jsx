@@ -22,7 +22,7 @@ const ClientSlider = () => {
   return (
     <section className="pt-12 pb-10">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-[#03373D] text-center mb-7">
+        <h2 className="text-2xl font-bold text-center mb-7">
           We've helped thousands of sales teams
         </h2>
 

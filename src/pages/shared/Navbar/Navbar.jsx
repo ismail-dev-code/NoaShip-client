@@ -24,16 +24,19 @@ const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink className={'mr-4'} to={"/"}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={"/about"}>About Us</NavLink>
+        <NavLink className={'mr-4'} to={"/coverage"}>Coverage</NavLink>
+      </li>
+      <li>
+        <NavLink className={'mr-4'} to={"/about"}>About Us</NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="navbar sticky top-0 z-50 shadow-sm bg-secondary">
+    <div className="navbar sticky top-0 z-50 px-6 shadow-sm bg-secondary">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -117,7 +120,7 @@ const Navbar = () => {
       <input
         type="checkbox"
         value="dark"
-        className="toggle theme-controller ml-3 text-white"
+        className="toggle theme-controller mx-3 text-white"
         checked={theme === "dark"}
         onChange={(e) => toggleTheme(e.target.checked)}
       />

@@ -61,7 +61,7 @@ const OurServices = () => {
         {services.map((service, idx) => (
           <div
             key={idx}
-            className="card hover:bg-primary hover:text-secondary transition-all cursor-pointer shadow-md hover:shadow-lg duration-500"
+            className="card hover:bg-primary transition-all cursor-pointer shadow-md hover:shadow-lg duration-500"
             data-aos="zoom-in"
             data-aos-delay={idx * 100}
             data-aos-duration="800"
