@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link } from "react-router";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
   const {
@@ -98,6 +99,7 @@ const Login = () => {
           </Link>
         </p>
       </form>
+      <SocialLogin/>
     </div>
   );
 };

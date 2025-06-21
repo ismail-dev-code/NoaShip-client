@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link } from "react-router"; 
+import useAuth from "../../../hooks/useAuth";
+import { toast } from "react-toastify";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Register = () => {
+    const {createUser} = useAuth();
   const {
     register,
     handleSubmit,
@@ -16,9 +20,17 @@ const Register = () => {
 
   const password = watch("password");
 
-  const onSubmit = (data) => {
-    console.log("Registration Data:", data);
-  };
+ const onSubmit = (data) => {
+  createUser(data.email, data.password)
+    .then((result) => {
+      console.log(result.user);
+      toast.success("Registration successful!");
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(error.message || "Something went wrong");
+    });
+};
 
   return (
     <div className="max-w-md mx-auto mt-16 px-4">
@@ -155,6 +167,7 @@ const Register = () => {
           </Link>
         </p>
       </form>
+      <SocialLogin/>
     </div>
   );
 };
