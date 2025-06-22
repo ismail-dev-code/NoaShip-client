@@ -4,6 +4,7 @@ import BenefitsSection from "../Benifits/BenefitsSection";
 import BeMerchant from "../BeMerchant/BeMerchant";
 import Banner from "../Banner/Banner";
 import HowItWorks from "../howitworks/HowItWorks";
+import Reviews from "../Reviews/Reviews";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <ClientSlider />
       <BenefitsSection />
       <BeMerchant />
+      <Reviews/>
     </>
   );
 };
