@@ -27,6 +27,9 @@ const Navbar = () => {
         <NavLink className={'mr-4'} to={"/"}>Home</NavLink>
       </li>
       <li>
+        <NavLink className={'mr-4'} to={"/sendParcel"}>Send a Parcel</NavLink>
+      </li>
+      <li>
         <NavLink className={'mr-4'} to={"/coverage"}>Coverage</NavLink>
       </li>
       <li>
