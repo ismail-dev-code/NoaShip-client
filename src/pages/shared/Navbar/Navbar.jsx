@@ -32,6 +32,15 @@ const Navbar = () => {
       <li>
         <NavLink className={'mr-4'} to={"/coverage"}>Coverage</NavLink>
       </li>
+
+    {
+      user && <>
+      <li>
+        <NavLink to={"/dashboard"}>Dashboard</NavLink>
+      </li>
+      </>
+    }
+
       <li>
         <NavLink className={'mr-4'} to={"/about"}>About Us</NavLink>
       </li>
@@ -65,7 +74,7 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to="/" className="text-xl">
           <ProFastLogo />
         </Link>
       </div>

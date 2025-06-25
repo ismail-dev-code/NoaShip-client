@@ -3,8 +3,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 import bannerImg1 from "../../../assets/banner/banner1.png";
-import bannerImg2 from "../../../assets/banner/banner2.png";
-import bannerImg3 from "../../../assets/banner/banner3.png";
+import bannerImg2 from "../../../assets/banner/banner1.png";
+import bannerImg3 from "../../../assets/banner/banner2.png";
+import bannerImg4 from "../../../assets/banner/banner2.png";
+import bannerImg5 from "../../../assets/banner/banner3.png";
+import bannerImg6 from "../../../assets/banner/banner3.png";
 
 const Banner = () => {
   return (
@@ -20,7 +23,7 @@ const Banner = () => {
         emulateTouch
         className="w-full"
       >
-        {[bannerImg1, bannerImg2, bannerImg3].map((img, index) => (
+        {[bannerImg1, bannerImg2, bannerImg3, bannerImg4, bannerImg5, bannerImg6].map((img, index) => (
           <div key={index} className="w-full">
             <img
               src={img}

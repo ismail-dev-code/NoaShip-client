@@ -8,6 +8,8 @@ import Coverage from "../pages/Coverage/Coverage";
 import Loading from "../pages/shared/Loading/Loading";
 import PrivateRoute from "../routes/PrivateRoute";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -25,10 +27,12 @@ export const router = createBrowserRouter([
         hydrateFallbackElement: <Loading />,
       },
       {
-        path: 'sendParcel',
-        element: <PrivateRoute>
-          <SendParcel/>
-        </PrivateRoute>,
+        path: "sendParcel",
+        element: (
+          <PrivateRoute>
+            <SendParcel />
+          </PrivateRoute>
+        ),
         loader: () => fetch("./districtBranches.json"),
         hydrateFallbackElement: <Loading />,
       },
@@ -45,6 +49,20 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: 
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>,
+    
+    children: [
+      {
+        path: "myParcels",
+        element: <MyParcels />,
       },
     ],
   },
