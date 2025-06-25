@@ -4,9 +4,11 @@ import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useTheme from "../Theme/useTheme";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut, updateUser } = useAuth();
+  console.log(user);
   const [showModal, setShowModal] = useState(false);
  const { theme, toggleTheme } = useTheme();
   const handleLogout = () => {
@@ -83,29 +85,91 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
 
-      <div className="navbar-end">
-        {user ? (
-          <>
-            <span className="mr-4 hidden md:inline-block">
-              {user.displayName || user.email}
-            </span>
-        
-            <button
-              onClick={() => setShowModal(true)}
-              className="btn btn-sm btn-outline btn-error rounded-full px-6"
-            >
-              Log Out
-            </button>
-          </>
-        ) : (
-          <Link
-            to="/login"
-            className="btn btn-sm btn-outline hover:text-black btn-primary rounded-full px-6"
+    <div className="navbar-end">
+  {user ? (
+    <div className="dropdown dropdown-end">
+      <label
+        tabIndex={0}
+        className="btn btn-sm btn-ghost btn-circle avatar hover:ring hover:ring-primary/50 transition"
+      >
+        <div className="w-10 rounded-full overflow-hidden">
+          {user.photoURL ? (
+            <img src={user.photoURL} alt="User Profile" />
+          ) : (
+            <div className="bg-gray-300 text-gray-700 w-full h-full flex items-center justify-center font-bold text-sm">
+              {user.displayName?.charAt(0) || user.email?.charAt(0)}
+            </div>
+          )}
+        </div>
+      </label>
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        <li className="mb-1 px-2 text-sm text-gray-500">
+          {user.displayName || user.email}
+        </li>
+       <li>
+  <button
+    onClick={() =>
+      Swal.fire({
+        title: "Edit Profile",
+        html: `
+          <input type="text" id="name" placeholder="Name" class="swal2-input" value="${user.displayName || ""}">
+          <input type="text" id="photo" placeholder="Photo URL" class="swal2-input" value="${user.photoURL || ""}">
+        `,
+        confirmButtonText: "Update",
+        showCancelButton: true,
+        focusConfirm: false,
+        preConfirm: () => {
+          const name = document.getElementById("name").value;
+          const photo = document.getElementById("photo").value;
+          if (!name) {
+            Swal.showValidationMessage("Name is required");
+            return false;
+          }
+          return { displayName: name, photoURL: photo };
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed && result.value) {
+          try {
+            await updateUser(result.value);
+            Swal.fire("Success!", "Profile updated successfully.", "success");
+          
+            location.reload();
+          } catch (err) {
+            console.error(err);
+            Swal.fire("Error", "Failed to update profile.", "error");
+          }
+        }
+      })
+    }
+  >
+    👤 Edit Profile
+  </button>
+</li>
+
+        <li>
+          <button
+            onClick={() => setShowModal(true)}
+            className="text-red-600 hover:bg-red-100"
           >
-            Log In
-          </Link>
-        )}
-      </div>
+            🔓 Log Out
+          </button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    <Link
+      to="/login"
+      className="btn btn-sm btn-outline hover:text-black btn-primary rounded-full px-6"
+    >
+      Log In
+    </Link>
+  )}
+</div>
+
+
 
       
       {showModal && (
