@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import useAuth from "../../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const {
@@ -10,11 +12,27 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { signIn } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data);
+  const from = location.state?.from || "/";
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      await signIn(data.email, data.password);
+      toast.success("Login successful!");
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("Invalid credentials. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,9 +43,11 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-base-200 p-6 rounded-lg shadow-md space-y-5"
       >
-        {/* Email Field */}
+        {/* Email */}
         <div>
-          <label className="label font-medium" htmlFor="email">Email</label>
+          <label className="label font-medium" htmlFor="email">
+            Email
+          </label>
           <input
             id="email"
             type="email"
@@ -38,7 +58,9 @@ const Login = () => {
                 message: "Enter a valid email address",
               },
             })}
-            className={`input input-bordered w-full ${errors.email ? "input-error" : ""}`}
+            className={`input input-bordered w-full ${
+              errors.email ? "input-error" : ""
+            }`}
             placeholder="Enter your email"
           />
           {errors.email && (
@@ -46,9 +68,11 @@ const Login = () => {
           )}
         </div>
 
-        {/* Password Field */}
+        {/* Password */}
         <div>
-          <label className="label font-medium" htmlFor="password">Password</label>
+          <label className="label font-medium" htmlFor="password">
+            Password
+          </label>
           <div className="relative">
             <input
               id="password"
@@ -61,7 +85,8 @@ const Login = () => {
                 },
                 pattern: {
                   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/,
-                  message: "Must include uppercase, lowercase, and a special character",
+                  message:
+                    "Must include uppercase, lowercase, and a special character",
                 },
               })}
               className={`input input-bordered w-full pr-10 ${
@@ -77,7 +102,9 @@ const Login = () => {
             </span>
           </div>
           {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -86,20 +113,28 @@ const Login = () => {
           <a className="link link-hover text-sm">Forgot password?</a>
         </div>
 
-        {/* Submit Button */}
-        <button type="submit" className="btn btn-primary text-black w-full">
-          Login
+        {/* Submit */}
+        <button
+          type="submit"
+          className="btn btn-primary text-black w-full"
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* Register Redirect Link */}
+        {/* Register Link */}
         <p className="text-sm text-center mt-4">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-secondary font-medium hover:underline">
+          <Link
+            to="/register"
+            className="text-secondary font-medium hover:underline"
+          >
             Create one
           </Link>
         </p>
       </form>
-      <SocialLogin/>
+
+      <SocialLogin />
     </div>
   );
 };
