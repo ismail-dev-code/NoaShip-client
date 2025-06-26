@@ -1,7 +1,13 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import ProFastLogo from "../pages/shared/Profast/ProfastLogo";
-
+import {
+  FaHome,
+  FaBoxOpen,
+  FaCreditCard,
+  FaMapMarkedAlt,
+  FaUserEdit,
+} from "react-icons/fa";
 const DashboardLayout = () => {
   return (
     <div className="drawer lg:drawer-open">
@@ -29,7 +35,7 @@ const DashboardLayout = () => {
           </label>
         </div>
 
-        {/* Your nested route page content will show here */}
+        {/*nested route page content will show here */}
         <div className="p-4">
           <Outlet />
         </div>
@@ -43,13 +49,29 @@ const DashboardLayout = () => {
             <ProFastLogo />
           </Link>
           <li>
-            <a>Home</a>
+            <NavLink to="/" className="flex items-center gap-2">
+              <FaHome /> Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to={"/dashboard/myParcels"}>My Parcels</NavLink>
+            <NavLink to="/dashboard/myParcels" className="flex items-center gap-2">
+              <FaBoxOpen /> My Parcels
+            </NavLink>
           </li>
           <li>
-            <a>Settings</a>
+            <NavLink to="/dashboard/paymentHistory" className="flex items-center gap-2">
+              <FaCreditCard /> Payment History
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/track" className="flex items-center gap-2">
+              <FaMapMarkedAlt /> Track Package
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/profile" className="flex items-center gap-2">
+              <FaUserEdit /> Edit Profile
+            </NavLink>
           </li>
         </ul>
       </div>
