@@ -1,173 +1,144 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router"; 
-import useAuth from "../../../hooks/useAuth";
-import { toast } from "react-toastify";
-import SocialLogin from "../SocialLogin/SocialLogin";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router';
+import useAuth from '../../../hooks/useAuth';
+import useAxios from '../../../hooks/useAxiosSecure';
+import axios from 'axios';
+import SocialLogin from '../SocialLogin/SocialLogin';
+import { toast } from 'react-toastify';
 
 const Register = () => {
-    const {createUser} = useAuth();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { createUser, updateProfile } = useAuth();
+  const axiosInstance = useAxios();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [profilePic, setProfilePic] = useState('');
+  const [uploading, setUploading] = useState(false);
 
-  const password = watch("password");
+  const onSubmit = async (data) => {
+    if (!profilePic) {
+      toast.error('Please upload your profile picture before submitting.');
+      return;
+    }
 
- const onSubmit = (data) => {
-  createUser(data.email, data.password)
-    .then((result) => {
-      console.log(result.user);
-      toast.success("Registration successful!");
-    })
-    .catch((error) => {
-      console.error(error);
-      toast.error(error.message || "Something went wrong");
-    });
-};
+    try {
+      // Step 1: Create Firebase User
+      const result = await createUser(data.email, data.password);
+      const createdUser = result.user;
+      console.log('Firebase user:', createdUser);
+
+      // Step 2: Save user to your database
+      const userInfo = {
+        email: data.email,
+        name: data.name,
+        role: 'user',
+        created_at: new Date().toISOString(),
+        last_log_in: new Date().toISOString(),
+      };
+      const res = await axiosInstance.post('/users', userInfo);
+      console.log('User saved to DB:', res.data);
+
+      // Step 3: Update Firebase Profile
+      const userProfile = {
+        displayName: data.name,
+        photoURL: profilePic,
+      };
+      await updateProfile(userProfile);
+      toast.success('Registration successful!');
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message || 'Something went wrong');
+    }
+  };
+
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    if (!image) return;
+
+    const formData = new FormData();
+    formData.append('image', image);
+    const uploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_UPLOAD_KEY}`;
+
+    try {
+      setUploading(true);
+      const res = await axios.post(uploadUrl, formData);
+      setProfilePic(res.data.data.url);
+      toast.success('Image uploaded successfully!');
+    } catch (err) {
+      console.error(err);
+      toast.error('Image upload failed!');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
-    <div className="max-w-md mx-auto mt-16 px-4">
-      <h2 className="text-3xl font-bold text-center mb-6">Create an Account</h2>
+    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto mt-10">
+      <div className="card-body">
+        <h1 className="text-4xl font-bold mb-4">Create Account</h1>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-base-200 p-6 rounded-lg shadow-md space-y-5"
-      >
-        {/* Name Field */}
-        <div>
-          <label className="label font-medium" htmlFor="name">Name</label>
-          <input
-            id="name"
-            type="text"
-            {...register("name", {
-              required: "Name is required",
-              minLength: {
-                value: 3,
-                message: "Name must be at least 3 characters",
-              },
-            })}
-            className={`input input-bordered w-full ${
-              errors.name ? "input-error" : ""
-            }`}
-            placeholder="Enter your full name"
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-          )}
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <fieldset className="space-y-3">
 
-        {/* Email Field */}
-        <div>
-          <label className="label font-medium" htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: "Enter a valid email address",
-              },
-            })}
-            className={`input input-bordered w-full ${
-              errors.email ? "input-error" : ""
-            }`}
-            placeholder="Enter your email"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-          )}
-        </div>
-
-        {/* Password Field */}
-        <div>
-          <label className="label font-medium" htmlFor="password">Password</label>
-          <div className="relative">
+            {/* Name */}
+            <label className="label">Your Name</label>
             <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/,
-                  message: "Must include uppercase, lowercase, and special character",
-                },
-              })}
-              className={`input input-bordered w-full pr-10 ${
-                errors.password ? "input-error" : ""
-              }`}
-              placeholder="Create a password"
+              type="text"
+              {...register('name', { required: true })}
+              className="input input-bordered w-full"
+              placeholder="Your Name"
             />
-            <span
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-lg text-gray-500"
-            >
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
-          </div>
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+            {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
 
-        {/* Confirm Password Field */}
-        <div>
-          <label className="label font-medium" htmlFor="confirmPassword">Confirm Password</label>
-          <div className="relative">
+            {/* Profile Picture */}
+            <label className="label mt-2">Profile Picture</label>
             <input
-              id="confirmPassword"
-              type={showConfirm ? "text" : "password"}
-              {...register("confirmPassword", {
-                required: "Please confirm your password",
-                validate: (value) =>
-                  value === password || "Passwords do not match",
-              })}
-              className={`input input-bordered w-full pr-10 ${
-                errors.confirmPassword ? "input-error" : ""
-              }`}
-              placeholder="Repeat your password"
+              type="file"
+              onChange={handleImageUpload}
+              className="file-input file-input-bordered w-full"
             />
-            <span
-              onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-lg text-gray-500"
-            >
-              {showConfirm ? <FiEyeOff /> : <FiEye />}
-            </span>
-          </div>
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
+            {profilePic && (
+              <img src={profilePic} alt="Profile" className="w-20 h-20 rounded-full mt-2 object-cover border" />
+            )}
 
-        {/* Submit Button */}
-        <button type="submit" className="btn btn-primary text-black w-full">
-          Register
-        </button>
+            {/* Email */}
+            <label className="label mt-2">Email</label>
+            <input
+              type="email"
+              {...register('email', { required: true })}
+              className="input input-bordered w-full"
+              placeholder="Email"
+            />
+            {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
 
-        {/* Login Redirect Link */}
-        <p className="text-sm text-center mt-4">
-          Already have an account?{" "}
-          <Link to="/login" className="text-secondary font-medium hover:underline">
-            Login here
-          </Link>
-        </p>
-      </form>
-      <SocialLogin/>
+            {/* Password */}
+            <label className="label mt-2">Password</label>
+            <input
+              type="password"
+              {...register('password', { required: true, minLength: 6 })}
+              className="input input-bordered w-full"
+              placeholder="Password"
+            />
+            {errors.password?.type === 'required' && <p className="text-red-500 text-sm">Password is required</p>}
+            {errors.password?.type === 'minLength' && <p className="text-red-500 text-sm">Password must be at least 6 characters</p>}
+
+            {/* Submit */}
+            <button type="submit" className="btn btn-primary text-black w-full mt-4" disabled={uploading}>
+              {uploading ? 'Uploading Image...' : 'Register'}
+            </button>
+          </fieldset>
+
+          <p className="mt-4 text-sm text-center">
+            Already have an account?{' '}
+            <Link to="/login" className="text-blue-600 underline">
+              Login
+            </Link>
+          </p>
+        </form>
+
+        <div className="divider">OR</div>
+        <SocialLogin />
+      </div>
     </div>
   );
 };

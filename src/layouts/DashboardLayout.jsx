@@ -49,7 +49,7 @@ const DashboardLayout = () => {
             <ProFastLogo />
           </Link>
           <li>
-            <NavLink to="/" className="flex items-center gap-2">
+            <NavLink to="/dashboard" className="flex items-center gap-2">
               <FaHome /> Home
             </NavLink>
           </li>
