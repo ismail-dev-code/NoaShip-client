@@ -15,11 +15,11 @@ const Login = () => {
   const { signIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-
+const from = location.state?.from || "/";
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const from = location.state?.from || "/";
+  
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -125,7 +125,7 @@ const Login = () => {
         {/* Register Link */}
         <p className="text-sm text-center mt-4">
           Don’t have an account?{" "}
-          <Link
+          <Link state={{from}}
             to="/register"
             className="text-secondary font-medium hover:underline"
           >

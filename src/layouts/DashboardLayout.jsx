@@ -9,6 +9,7 @@ import {
   FaUserEdit,
   FaUsers,
   FaUserClock,
+  FaUserShield,
 } from "react-icons/fa";
 const DashboardLayout = () => {
   return (
@@ -99,6 +100,12 @@ const DashboardLayout = () => {
               className="flex items-center gap-2"
             >
               <FaUsers /> Active Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/makeAdmin">
+              <FaUserShield className="inline-block mr-2" />
+              Make Admin
             </NavLink>
           </li>
         </ul>

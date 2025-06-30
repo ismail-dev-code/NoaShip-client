@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import useAxios from '../../../hooks/useAxiosSecure';
 import axios from 'axios';
@@ -14,7 +14,9 @@ const Register = () => {
 
   const [profilePic, setProfilePic] = useState('');
   const [uploading, setUploading] = useState(false);
-
+const location = useLocation();
+  const navigate = useNavigate();
+const from = location.state?.from || "/";
   const onSubmit = async (data) => {
     if (!profilePic) {
       toast.error('Please upload your profile picture before submitting.');
@@ -45,6 +47,7 @@ const Register = () => {
       };
       await updateProfile(userProfile);
       toast.success('Registration successful!');
+      navigate(from)
     } catch (err) {
       console.error(err);
       toast.error(err.message || 'Something went wrong');
