@@ -93,7 +93,7 @@ const Navbar = () => {
         className="btn btn-sm btn-ghost btn-circle avatar hover:ring hover:ring-primary/50 transition"
       >
         <div className="w-10 rounded-full overflow-hidden">
-          {user.photoURL ? (
+          {user?.photoURL ? (
             <img src={user.photoURL} alt="User Profile" />
           ) : (
             <div className="bg-gray-300 text-gray-700 w-full h-full flex items-center justify-center font-bold text-sm">
