@@ -33,7 +33,7 @@ const TrackParcel = () => {
           value={trackingId}
           onChange={(e) => setTrackingId(e.target.value)}
         />
-        <button type="submit" className="btn btn-primary whitespace-nowrap">
+        <button type="submit" className="btn text-black btn-primary whitespace-nowrap">
           Track
         </button>
       </form>

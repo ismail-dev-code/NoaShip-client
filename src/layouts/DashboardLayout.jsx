@@ -56,12 +56,18 @@ const DashboardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/myParcels" className="flex items-center gap-2">
+            <NavLink
+              to="/dashboard/myParcels"
+              className="flex items-center gap-2"
+            >
               <FaBoxOpen /> My Parcels
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/paymentHistory" className="flex items-center gap-2">
+            <NavLink
+              to="/dashboard/paymentHistory"
+              className="flex items-center gap-2"
+            >
               <FaCreditCard /> Payment History
             </NavLink>
           </li>
@@ -71,22 +77,30 @@ const DashboardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/profile" className="flex items-center gap-2">
+            <NavLink
+              to="/dashboard/profile"
+              className="flex items-center gap-2"
+            >
               <FaUserEdit /> Edit Profile
             </NavLink>
           </li>
           {/* riders links  */}
           <li>
-  <NavLink to="/dashboard/pendingRiders" className="flex items-center gap-2">
-    <FaUserClock /> Pending Riders
-  </NavLink>
-</li>
-<li>
-  <NavLink to="/dashboard/activeRiders" className="flex items-center gap-2">
-    <FaUsers /> Active Riders
-  </NavLink>
-</li>
-
+            <NavLink
+              to="/dashboard/pendingRiders"
+              className="flex items-center gap-2"
+            >
+              <FaUserClock /> Pending Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/activeRiders"
+              className="flex items-center gap-2"
+            >
+              <FaUsers /> Active Riders
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>

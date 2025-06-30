@@ -15,6 +15,8 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import TrackParcel from "../pages/Dashboard/TrackParcel/TrackParcel";
 import BeARider from "../pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
+import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
+import DashboardHome from "../pages/home/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +78,10 @@ export const router = createBrowserRouter([
 
     children: [
       {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
         path: "myParcels",
         element: <MyParcels />,
       },
@@ -94,6 +100,10 @@ export const router = createBrowserRouter([
       {
         path: "pendingRiders",
         element: <PendingRiders />,
+      },
+      {
+        path: "activeRiders",
+        element: <ActiveRiders />,
       },
     ],
   },
