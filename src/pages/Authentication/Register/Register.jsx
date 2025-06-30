@@ -139,7 +139,7 @@ const from = location.state?.from || "/";
           </p>
         </form>
 
-        <div className="divider">OR</div>
+       
         <SocialLogin />
       </div>
     </div>

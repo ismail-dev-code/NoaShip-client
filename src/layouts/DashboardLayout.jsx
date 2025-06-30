@@ -108,7 +108,7 @@ const DashboardLayout = () => {
               </li>
               <li>
                 <NavLink to="/dashboard/makeAdmin">
-                  <FaUserShield className="inline-block mr-2" />
+                  <FaUserShield className="inline-block" />
                   Make Admin
                 </NavLink>
               </li>

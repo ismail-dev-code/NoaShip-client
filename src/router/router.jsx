@@ -18,6 +18,9 @@ import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
 import DashboardHome from "../pages/home/DashboardHome";
 import MakeAdmin from "../pages/Dashboard/MakeAdmin/MakeAdmin";
+import Forbidden from "../pages/Forbidden/Forbidden";
+import AdminRoute from "../routes/AdminRoute";
+import NotFound from "../pages/NotFound/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +36,10 @@ export const router = createBrowserRouter([
         Component: Coverage,
         loader: () => fetch("./districtBranches.json"),
         hydrateFallbackElement: <Loading />,
+      },
+      {
+        path: "forbidden",
+        Component: Forbidden,
       },
       {
         path: "beARider",
@@ -100,16 +107,32 @@ export const router = createBrowserRouter([
       },
       {
         path: "pendingRiders",
-        element: <PendingRiders />,
+        element: (
+          <AdminRoute>
+            <PendingRiders />
+          </AdminRoute>
+        ),
       },
       {
         path: "activeRiders",
-        element: <ActiveRiders />,
+        element: (
+          <AdminRoute>
+            <ActiveRiders />
+          </AdminRoute>
+        ),
       },
       {
         path: "makeAdmin",
-        element: <MakeAdmin />,
+        element: (
+          <AdminRoute>
+            <MakeAdmin />
+          </AdminRoute>
+        ),
       },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFound,
   },
 ]);

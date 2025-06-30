@@ -126,7 +126,7 @@ const TrackParcel = () => {
             <p>
               <span className="font-bold">Payment:</span>{" "}
               <span className="text-green-700 font-semibold">
-                ৳{parcel.cost}
+                {parcel.cost}৳
               </span>{" "}
               {parcel.paymentStatus === "paid" && (
                 <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
