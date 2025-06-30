@@ -10,7 +10,7 @@ const Navbar = () => {
   const { user, logOut, updateUser } = useAuth();
   console.log(user);
   const [showModal, setShowModal] = useState(false);
- const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const handleLogout = () => {
     logOut()
       .then(() => {
@@ -26,25 +26,38 @@ const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <NavLink className={'mr-4'} to={"/"}>Home</NavLink>
+        <NavLink className={"mr-4"} to={"/"}>
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink className={'mr-4'} to={"/sendParcel"}>Send a Parcel</NavLink>
+        <NavLink className={"mr-4"} to={"/sendParcel"}>
+          Send a Parcel
+        </NavLink>
       </li>
       <li>
-        <NavLink className={'mr-4'} to={"/coverage"}>Coverage</NavLink>
+        <NavLink className={"mr-4"} to={"/coverage"}>
+          Coverage
+        </NavLink>
       </li>
 
-    {
-      user && <>
-      <li>
-        <NavLink to={"/dashboard"}>Dashboard</NavLink>
-      </li>
-      </>
-    }
+      {user && (
+        <>
+          <li>
+            <NavLink className={"mr-4"} to={"/dashboard"}>Dashboard</NavLink>
+          </li>
+        </>
+      )}
 
       <li>
-        <NavLink className={'mr-4'} to={"/about"}>About Us</NavLink>
+        <NavLink className={"mr-4"} to={"/beARider"}>
+          Be a Rider
+        </NavLink>
+      </li>
+      <li>
+        <NavLink className={"mr-4"} to={"/about"}>
+          About Us
+        </NavLink>
       </li>
     </>
   );
@@ -85,97 +98,108 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
 
-    <div className="navbar-end">
-  {user ? (
-    <div className="dropdown dropdown-end">
-      <label
-        tabIndex={0}
-        className="btn btn-sm btn-ghost btn-circle avatar hover:ring hover:ring-primary/50 transition"
-      >
-        <div className="w-10 rounded-full overflow-hidden">
-          {user?.photoURL ? (
-            <img src={user.photoURL} alt="User Profile" />
-          ) : (
-            <div className="bg-gray-300 text-gray-700 w-full h-full flex items-center justify-center font-bold text-sm">
-              {user.displayName?.charAt(0) || user.email?.charAt(0)}
-            </div>
-          )}
-        </div>
-      </label>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        <li className="mb-1 px-2 text-sm text-gray-500">
-          {user.displayName || user.email}
-        </li>
-       <li>
-  <button
-    onClick={() =>
-      Swal.fire({
-        title: "Edit Profile",
-        html: `
-          <input type="text" id="name" placeholder="Name" class="swal2-input" value="${user.displayName || ""}">
-          <input type="text" id="photo" placeholder="Photo URL" class="swal2-input" value="${user.photoURL || ""}">
+      <div className="navbar-end">
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <label
+              tabIndex={0}
+              className="btn btn-sm btn-ghost btn-circle avatar hover:ring hover:ring-primary/50 transition"
+            >
+              <div className="w-10 rounded-full overflow-hidden">
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="User Profile" />
+                ) : (
+                  <div className="bg-gray-300 text-gray-700 w-full h-full flex items-center justify-center font-bold text-sm">
+                    {user.displayName?.charAt(0) || user.email?.charAt(0)}
+                  </div>
+                )}
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li className="mb-1 px-2 text-sm text-gray-500">
+                {user.displayName || user.email}
+              </li>
+              <li>
+                <button
+                  onClick={() =>
+                    Swal.fire({
+                      title: "Edit Profile",
+                      html: `
+          <input type="text" id="name" placeholder="Name" class="swal2-input" value="${
+            user.displayName || ""
+          }">
+          <input type="text" id="photo" placeholder="Photo URL" class="swal2-input" value="${
+            user.photoURL || ""
+          }">
         `,
-        confirmButtonText: "Update",
-        showCancelButton: true,
-        focusConfirm: false,
-        preConfirm: () => {
-          const name = document.getElementById("name").value;
-          const photo = document.getElementById("photo").value;
-          if (!name) {
-            Swal.showValidationMessage("Name is required");
-            return false;
-          }
-          return { displayName: name, photoURL: photo };
-        },
-      }).then(async (result) => {
-        if (result.isConfirmed && result.value) {
-          try {
-            await updateUser(result.value);
-            Swal.fire("Success!", "Profile updated successfully.", "success");
-          
-            location.reload();
-          } catch (err) {
-            console.error(err);
-            Swal.fire("Error", "Failed to update profile.", "error");
-          }
-        }
-      })
-    }
-  >
-    👤 Edit Profile
-  </button>
-</li>
+                      confirmButtonText: "Update",
+                      showCancelButton: true,
+                      focusConfirm: false,
+                      preConfirm: () => {
+                        const name = document.getElementById("name").value;
+                        const photo = document.getElementById("photo").value;
+                        if (!name) {
+                          Swal.showValidationMessage("Name is required");
+                          return false;
+                        }
+                        return { displayName: name, photoURL: photo };
+                      },
+                    }).then(async (result) => {
+                      if (result.isConfirmed && result.value) {
+                        try {
+                          await updateUser(result.value);
+                          Swal.fire(
+                            "Success!",
+                            "Profile updated successfully.",
+                            "success"
+                          );
 
-        <li>
-          <button
-            onClick={() => setShowModal(true)}
-            className="text-red-600 hover:bg-red-100"
+                          location.reload();
+                        } catch (err) {
+                          console.error(err);
+                          Swal.fire(
+                            "Error",
+                            "Failed to update profile.",
+                            "error"
+                          );
+                        }
+                      }
+                    })
+                  }
+                >
+                  👤 Edit Profile
+                </button>
+              </li>
+
+              <li>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="text-red-600 hover:bg-red-100"
+                >
+                  🔓 Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className="btn btn-sm btn-outline hover:text-black btn-primary rounded-full px-6"
           >
-            🔓 Log Out
-          </button>
-        </li>
-      </ul>
-    </div>
-  ) : (
-    <Link
-      to="/login"
-      className="btn btn-sm btn-outline hover:text-black btn-primary rounded-full px-6"
-    >
-      Log In
-    </Link>
-  )}
-</div>
+            Log In
+          </Link>
+        )}
+      </div>
 
-
-
-      
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-sm">
-            <h3 className="text-lg text-secondary font-semibold mb-4">Confirm Logout</h3>
+            <h3 className="text-lg text-secondary font-semibold mb-4">
+              Confirm Logout
+            </h3>
             <p className="mb-6 text-sm text-gray-600">
               Are you sure you want to log out?
             </p>
@@ -186,7 +210,10 @@ const Navbar = () => {
               >
                 Cancel
               </button>
-              <button className="btn text-base-100 btn-sm btn-error" onClick={handleLogout}>
+              <button
+                className="btn text-base-100 btn-sm btn-error"
+                onClick={handleLogout}
+              >
                 Yes, Log Out
               </button>
             </div>

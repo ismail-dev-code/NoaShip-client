@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <div className="font-urbanist">
       <QueryClientProvider client={queryClient}>
-        <ToastContainer position="top-right" />
+        <ToastContainer position="top-right" autoClose={2000} />
         <AuthProvider>
           <RouterProvider router={router} />
         </AuthProvider>
