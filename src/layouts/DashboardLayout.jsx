@@ -10,6 +10,7 @@ import {
   FaUsers,
   FaUserClock,
   FaUserShield,
+  FaMotorcycle,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 const DashboardLayout = () => {
@@ -90,6 +91,15 @@ const DashboardLayout = () => {
           {/* riders links  */}
           {!roleLoading && role === "admin" && (
             <>
+            <li>
+  <NavLink
+    to="/dashboard/assign-rider"
+    className="flex items-center gap-2"
+  >
+    <FaMotorcycle /> Assign Rider
+  </NavLink>
+</li>
+
               <li>
                 <NavLink
                   to="/dashboard/pendingRiders"
