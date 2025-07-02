@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -15,6 +15,7 @@ const SendParcel = () => {
   } = useForm();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const watchType = watch("type");
   const watchWeight = parseFloat(watch("weight")) || 0;
@@ -114,38 +115,41 @@ const SendParcel = () => {
     });
   };
 
- const handleConfirmSubmit = (data, cost) => {
-  const now = new Date();
-  const creation_date = now.toISOString().slice(0, 10);
-  const creation_time = now.toTimeString().split(" ")[0];
+  const handleConfirmSubmit = (data, cost) => {
+    const now = new Date();
+    const creation_date = now.toISOString().slice(0, 10);
+    const creation_time = now.toTimeString().split(" ")[0];
 
-  const trackingId = `TRK-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-  const parcelInfo = {
-    ...data,
-    trackingId,
-    cost,
-    creation_date,
-    creation_time,
-    createdBy: user?.email || "Anonymous",
-    paymentStatus: "unpaid",
-    deliveryStatus: "pending",
+    const trackingId = `TRK-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const parcelInfo = {
+      ...data,
+      trackingId,
+      cost,
+      creation_date,
+      creation_time,
+      createdBy: user?.email || "Anonymous",
+      paymentStatus: "unpaid",
+      deliveryStatus: "pending",
+    };
+
+    //  Save to database here
+    axiosSecure
+      .post("/parcels", parcelInfo)
+      .then((res) => {
+        console.log("Saved to DB:", res.data);
+        Swal.fire(
+          "Success!",
+          `Parcel added successfully! Tracking ID: ${trackingId}`,
+          "success"
+        );
+        navigate("/dashboard/myParcels");
+        reset();
+      })
+      .catch((error) => {
+        console.error("Failed to save parcel:", error);
+        Swal.fire("Error", "Something went wrong. Try again!", "error");
+      });
   };
-
-  //  Save to database here
-  axiosSecure.post('/parcels', parcelInfo).then(res => {
-    console.log('Saved to DB:', res.data);
-    Swal.fire(
-      "Success!",
-      `Parcel added successfully! Tracking ID: ${trackingId}`,
-      "success"
-    );
-    reset();
-  }).catch(error => {
-    console.error('Failed to save parcel:', error);
-    Swal.fire("Error", "Something went wrong. Try again!", "error");
-  });
-};
-
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -213,6 +217,12 @@ const SendParcel = () => {
             <h3 className="font-semibold mb-4">Sender Info</h3>
             <div className="grid grid-cols-1 gap-4">
               <input
+                value={user?.displayName || "Anonymous"}
+                readOnly
+                className="input input-bordered"
+                title="Sender Name"
+              />
+              <input
                 value={user?.email || "Anonymous"}
                 readOnly
                 className="input input-bordered"
@@ -222,6 +232,7 @@ const SendParcel = () => {
                 {...register("senderContact", { required: true })}
                 placeholder="Sender Contact"
                 className="input input-bordered"
+                required
               />
               {errors.senderContact && (
                 <p className="text-red-500 text-sm">
@@ -264,10 +275,10 @@ const SendParcel = () => {
                 placeholder="Sender Address"
                 className="input input-bordered"
               />
-              <input
+              <textarea
                 {...register("pickupInstruction", { required: true })}
                 placeholder="Pickup Instruction"
-                className="input input-bordered"
+                className="input input-bordered h-22"
               />
               {errors.senderAddress && (
                 <p className="text-red-500 text-sm">Address is required</p>
@@ -277,7 +288,7 @@ const SendParcel = () => {
               )}
             </div>
           </div>
-
+          {/* receiver info below  */}
           <div className="border p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-4">Receiver Info</h3>
             <div className="grid grid-cols-1 gap-4">
@@ -288,6 +299,7 @@ const SendParcel = () => {
               />
               <input
                 {...register("receiverContact", { required: true })}
+                type="number"
                 placeholder="Receiver Contact"
                 className="input input-bordered"
               />
@@ -337,10 +349,10 @@ const SendParcel = () => {
                 placeholder="Receiver Address"
                 className="input input-bordered"
               />
-              <input
+              <textarea
                 {...register("deliveryInstruction", { required: true })}
                 placeholder="Delivery Instruction"
-                className="input input-bordered"
+                className="textarea textarea-bordered h-22"
               />
               {errors.receiverAddress && (
                 <p className="text-red-500 text-sm">Address is required</p>

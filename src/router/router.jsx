@@ -22,6 +22,8 @@ import Forbidden from "../pages/Forbidden/Forbidden";
 import AdminRoute from "../routes/AdminRoute";
 import NotFound from "../pages/NotFound/NotFound";
 import AssignRider from "../pages/Dashboard/AssignRider/AssignRider";
+import RiderRoute from "../routes/RiderRoute";
+import PendingDeliveries from "../pages/Dashboard/PendingDeliveries/PendingDeliveries";
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +108,24 @@ export const router = createBrowserRouter([
         path: "track",
         element: <TrackParcel />,
       },
+      // rider only routes
+      {
+        path: 'pending-deliveries',
+        element: <RiderRoute><PendingDeliveries></PendingDeliveries></RiderRoute>
+      },
+      // {
+      //   path: 'completed-deliveries',
+      //   element: <RiderRoute>
+      //     <CompletedDeliveries></CompletedDeliveries>
+      //   </RiderRoute>
+      // },
+      // {
+      //   path: 'my-earnings',
+      //   element: <RiderRoute>
+      //     <MyEarnings></MyEarnings>
+      //   </RiderRoute>
+      // },
+      // admin only routes
       {
         path: 'assign-rider',
         element: <AdminRoute><AssignRider/></AdminRoute>

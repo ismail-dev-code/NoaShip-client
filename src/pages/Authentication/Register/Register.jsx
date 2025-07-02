@@ -37,7 +37,7 @@ const from = location.state?.from || "/";
         created_at: new Date().toISOString(),
         last_log_in: new Date().toISOString(),
       };
-      const res = await axiosInstance.post('/users', userInfo);
+      const res = await axios.post('http://localhost:5000/users', userInfo);
       console.log('User saved to DB:', res.data);
 
       // Step 3: Update Firebase Profile

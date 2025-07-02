@@ -4,6 +4,9 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import { FaTrashAlt, FaMoneyCheckAlt } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -23,7 +26,6 @@ const MyParcels = () => {
     },
   });
 
-  // Mutation for deleting parcel
   const deleteParcelMutation = useMutation({
     mutationFn: async (id) => {
       return await axiosSecure.delete(`/parcels/${id}`);
@@ -52,7 +54,6 @@ const MyParcels = () => {
   };
 
   const handlePay = (parcelId) => {
-    // Navigate to a payment route
     navigate(`/dashboard/payment/${parcelId}`);
   };
 
@@ -136,19 +137,25 @@ const MyParcels = () => {
                   </td>
                   <td className="space-x-2">
                     {parcel.paymentStatus !== "paid" && (
-                      <button
-                        onClick={() => handlePay(parcel._id)}
-                        className="btn btn-xs btn-primary"
-                      >
-                        Pay
-                      </button>
+                      <>
+                        <button
+                          onClick={() => handlePay(parcel._id)}
+                          data-tooltip-id={`pay-tooltip-${parcel._id}`}
+                          className="btn btn-ghost btn-xs text-green-600"
+                        >
+                          <FaMoneyCheckAlt size={18} />
+                        </button>
+                        <Tooltip id={`pay-tooltip-${parcel._id}`} content="Pay Now" />
+                      </>
                     )}
                     <button
                       onClick={() => handleDelete(parcel._id)}
-                      className="btn btn-xs btn-error"
+                      data-tooltip-id={`delete-tooltip-${parcel._id}`}
+                      className="btn btn-ghost btn-xs text-red-600"
                     >
-                      Delete
+                      <FaTrashAlt size={18} />
                     </button>
+                    <Tooltip id={`delete-tooltip-${parcel._id}`} content="Delete Parcel" />
                   </td>
                 </tr>
               ))}
