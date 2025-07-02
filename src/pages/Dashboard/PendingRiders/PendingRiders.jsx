@@ -20,7 +20,8 @@ const PendingRiders = () => {
     },
   });
 
-  if (isPending) return <p className="text-center mt-8">Loading pending riders...</p>;
+  if (isPending)
+    return <p className="text-center mt-8">Loading pending riders...</p>;
 
   const handleDecision = async (id, action, email) => {
     const confirm = await Swal.fire({
@@ -46,10 +47,12 @@ const PendingRiders = () => {
       Swal.fire("Error", "Could not update rider status", "error");
     }
   };
-
+  console.log(riders);
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">Pending Rider Applications</h2>
+      <h2 className="text-2xl font-semibold mb-4">
+        Pending Rider Applications
+      </h2>
 
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
@@ -92,13 +95,17 @@ const PendingRiders = () => {
                     <FaEye />
                   </button>
                   <button
-                    onClick={() => handleDecision(rider._id, "approve", rider.email)}
+                    onClick={() =>
+                      handleDecision(rider._id, "approve", rider.email)
+                    }
                     className="btn btn-sm btn-success"
                   >
                     <FaCheck />
                   </button>
                   <button
-                    onClick={() => handleDecision(rider._id, "reject", rider.email)}
+                    onClick={() =>
+                      handleDecision(rider._id, "reject", rider.email)
+                    }
                     className="btn btn-sm btn-error"
                   >
                     <FaTimes />
@@ -112,47 +119,48 @@ const PendingRiders = () => {
 
       {/* Rider Details Modal */}
       {selectedRider && (
-        <dialog id="riderDetailsModal" className="modal modal-open">
-          <div className="modal-box max-w-2xl">
-            <h3 className="font-bold text-xl mb-2">Rider Details</h3>
-            <div className="space-y-2">
-              <p><strong>Name:</strong> {selectedRider.name}</p>
-              <p><strong>Email:</strong> {selectedRider.email}</p>
-              <p><strong>Phone:</strong> {selectedRider.phone}</p>
-              <p><strong>Age:</strong> {selectedRider.age}</p>
-              <p><strong>NID:</strong> {selectedRider.nid}</p>
-              <p><strong>Bike Brand:</strong> {selectedRider.bikeBrand}</p>
-              <p><strong>Bike Registration:</strong> {selectedRider.bikeRegNumber}</p>
-              <p><strong>Region:</strong> {selectedRider.region}</p>
-              <p><strong>District:</strong> {selectedRider.district}</p>
-              <p>
-                <strong>Applied At:</strong>{" "}
-                {new Date(selectedRider.applied_at).toLocaleString("en-BD", {
-                  timeZone: "Asia/Dhaka",
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}{" "}
-                BDT
-              </p>
-              {selectedRider.note && (
-                <p><strong>Note:</strong> {selectedRider.note}</p>
-              )}
-            </div>
-            <div className="modal-action mt-4">
-              <button
-                className="btn btn-outline"
-                onClick={() => setSelectedRider(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </dialog>
-      )}
+  <div className="modal modal-open">
+    <div className="modal-box max-w-2xl">
+      <h3 className="font-bold text-xl mb-2">Rider Details</h3>
+      <div className="space-y-2">
+        <p><strong>Name:</strong> {selectedRider.name}</p>
+        <p><strong>Email:</strong> {selectedRider.email}</p>
+        <p><strong>Phone:</strong> {selectedRider.phone}</p>
+        <p><strong>Age:</strong> {selectedRider.age}</p>
+        <p><strong>NID:</strong> {selectedRider.nid}</p>
+        <p><strong>Bike Brand:</strong> {selectedRider.bikeBrand}</p>
+        <p><strong>Bike Registration:</strong> {selectedRider.bikeRegNumber}</p>
+        <p><strong>Region:</strong> {selectedRider.region}</p>
+        <p><strong>District:</strong> {selectedRider.district}</p>
+        <p>
+          <strong>Applied At:</strong>{" "}
+          {new Date(selectedRider.applied_at).toLocaleString("en-BD", {
+            timeZone: "Asia/Dhaka",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          })}{" "}
+          BDT
+        </p>
+        {selectedRider.note && (
+          <p><strong>Note:</strong> {selectedRider.note}</p>
+        )}
+      </div>
+      <div className="modal-action mt-4">
+        <button
+          className="btn btn-outline"
+          onClick={() => setSelectedRider(null)}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

@@ -15,11 +15,9 @@ const Login = () => {
   const { signIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-const from = location.state?.from || "/";
+  const from = location.state?.from || "/";
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -83,11 +81,6 @@ const from = location.state?.from || "/";
                   value: 6,
                   message: "Password must be at least 6 characters",
                 },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).+$/,
-                  message:
-                    "Must include uppercase, lowercase, and a special character",
-                },
               })}
               className={`input input-bordered w-full pr-10 ${
                 errors.password ? "input-error" : ""
@@ -125,7 +118,8 @@ const from = location.state?.from || "/";
         {/* Register Link */}
         <p className="text-sm text-center mt-4">
           Don’t have an account?{" "}
-          <Link state={{from}}
+          <Link
+            state={{ from }}
             to="/register"
             className="text-secondary font-medium hover:underline"
           >
