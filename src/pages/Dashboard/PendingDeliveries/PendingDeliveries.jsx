@@ -24,6 +24,7 @@ const PendingDeliveries = () => {
     // Mutation for updating parcel status
     const { mutateAsync: updateStatus } = useMutation({
         mutationFn: async ({ parcel, status }) => {
+            console.log(parcel, status);
             const res = await axiosSecure.patch(`/parcels/${parcel._id}/status`, {
                 status,
             });
@@ -33,7 +34,6 @@ const PendingDeliveries = () => {
             queryClient.invalidateQueries(["riderParcels"]);
         },
     });
-
     const handleStatusUpdate = (parcel, newStatus) => {
         Swal.fire({
             title: "Are you sure?",
