@@ -21,4 +21,5 @@
 
 a.active{
   @apply bg-primary
+  text-black
 }

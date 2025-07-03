@@ -83,12 +83,12 @@ const Register = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto mt-10">
-      <div className="card-body">
-        <h1 className="text-4xl font-bold mb-4">Create Account</h1>
+    <div className="card max-w-md mx-auto px-4">
+      
+        <h1 className="text-3xl text-center font-bold mb-4">Create Account</h1>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="space-y-3">
+          <fieldset className="space-y-1.5">
             {/* Name */}
             <label className="label">Your Name</label>
             <input
@@ -165,7 +165,7 @@ const Register = () => {
 
         <SocialLogin />
       </div>
-    </div>
+   
   );
 };
 

@@ -11,14 +11,14 @@ import {
 const Footer = () => {
   return (
     <footer className="bg-secondary text-base-content px-6 py-10">
-      <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-3 text-white gap-8">
         {/* Logo and Description */}
         <div className="flex flex-col items-start space-y-3">
           <Link to="/">
             <NoaShipLogo />
           </Link>
           <p className="text-sm max-w-sm">
-            Fast, secure, and reliable parcel delivery service with real-time tracking and 24/7 customer support across Noakhali and beyond.
+            Fast, secure, and reliable parcel delivery service with real-time tracking and 24/7 customer support across Bangladesh.
           </p>
           <div className="flex gap-4 mt-2">
             <a href="#" aria-label="Twitter" className="hover:text-blue-400 transition">

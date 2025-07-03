@@ -34,16 +34,16 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-16 px-4">
+    <div className="max-w-md mx-auto px-4">
       <h2 className="text-3xl font-bold text-center mb-6">Welcome Back</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-base-200 p-6 rounded-lg shadow-md space-y-5"
+        className="p-6 rounded-lg space-y-3"
       >
         {/* Email */}
         <div>
-          <label className="label font-medium" htmlFor="email">
+          <label className="label font-medium mb-1.5" htmlFor="email">
             Email
           </label>
           <input
@@ -68,7 +68,7 @@ const Login = () => {
 
         {/* Password */}
         <div>
-          <label className="label font-medium" htmlFor="password">
+          <label className="label font-medium mb-1.5" htmlFor="password">
             Password
           </label>
           <div className="relative">
