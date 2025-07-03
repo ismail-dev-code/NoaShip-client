@@ -43,7 +43,8 @@ const Banner = () => {
         infiniteLoop
         showThumbs={false}
         showStatus={false}
-        interval={4000}
+        showIndicators={false}
+        interval={9000}
         transitionTime={800}
         swipeable
         emulateTouch
@@ -59,7 +60,7 @@ const Banner = () => {
               <Lottie
                 animationData={item.animation}
                 loop={true}
-                className="w-[300px] h-[500px]" 
+                className="w-full h-[500px]" 
               />
             </div>
 

@@ -1,33 +1,56 @@
-import React from "react";
-import { benefits } from "../Benifits/benefitsData";
+import React, { useEffect } from "react";
+import { benefits } from "./benefitsData";
+import Lottie from "lottie-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const BenefitsSection = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: "ease-in-out",
+      once: true,
+      offset: 100,
+    });
+  }, []);
+
   return (
-    <section className="px-4 md:px-8 lg:px-16 bg-base-100 pt-0">
-      <div className="space-y-8">
-        {benefits.map((item, index) => (
-          <div
-            key={item.id}
-            className="card card-side shadow-md flex flex-col md:flex-row items-center"
-            data-aos="fade-up"
-            data-aos-delay={index * 100}
-            data-aos-duration="800"
-          >
-            <figure className="md:w-1/3 w-full p-4 flex justify-center items-center">
-              <div className="h-32 md:border-r md:border-dotted md:border-gray-400 pr-4 flex items-center">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-full object-contain rounded-md"
+    <section className="w-full py-12 px-4 md:px-10 lg:px-20">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-16">
+          Why Choose NoaShip?
+        </h2>
+
+        <div className="space-y-16">
+          {benefits.map((benefit, index) => (
+            <div
+              key={benefit.id}
+              data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
+              className={`flex flex-col-reverse md:flex-row items-center gap-8 ${
+                index % 2 === 1 ? "md:flex-row-reverse" : ""
+              }`}
+            >
+              {/* Lottie Animation */}
+              <div className="w-full md:w-1/2 flex justify-center">
+                <Lottie
+                  animationData={benefit.image}
+                  loop
+                  className="w-[200px] sm:w-[240px] md:w-[260px] h-auto"
                 />
               </div>
-            </figure>
-            <div className="card-body md:w-2/3">
-              <h3 className="card-title text-xl md:text-2xl">{item.title}</h3>
-              <p className="text-sm md:text-base">{item.description}</p>
+
+              {/* Text Content */}
+              <div className="w-full md:w-1/2 text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-semibold mb-4">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+                  {benefit.description}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

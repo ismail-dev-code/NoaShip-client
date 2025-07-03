@@ -1,13 +1,13 @@
-import React from 'react';
-import ProFastLogo from '../Profast/ProfastLogo';
+
 import { FaFacebook, FaLinkedinIn, FaTwitter, FaYoutube } from 'react-icons/fa';
+import NoaShipLogo from '../NoaShip/NoaShipLogo';
 
 const Footer = () => {
   return (
     <footer className="bg-neutral text-neutral-content py-10 px-6">
       <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-3">
  
-        <ProFastLogo />
+        <NoaShipLogo />
 
    
         <p className="text-sm leading-relaxed max-w-lg">
@@ -15,7 +15,7 @@ const Footer = () => {
           From personal packages to business shipments — we deliver on time, every time.
         </p>
 
-        <p className="text-xs">© <small>{new Date().getFullYear()} ProFast — All rights reserved.</small></p>
+        <p className="text-xs">© <small>{new Date().getFullYear()} NoaShip — All rights reserved.</small></p>
 
  
         <div className="flex gap-6 justify-center mt-1">

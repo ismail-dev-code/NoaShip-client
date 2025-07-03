@@ -24,7 +24,7 @@ const BeMerchant = () => {
 
           <p className="text-base md:text-lg text-gray-200">
             We offer the lowest delivery charges with the highest value—
-            ensuring 100% safety for your products. ProFast Courier delivers
+            ensuring 100% safety for your products. NoaShip Courier delivers
             parcels to every corner of Bangladesh, right on time.
           </p>
 
@@ -33,7 +33,7 @@ const BeMerchant = () => {
               Become a Merchant
             </button>
             <button className="btn rounded-full btn-outline hover:text-black btn-primary">
-              Earn with ProFast Courier
+              Earn with NoaShip Courier
             </button>
           </div>
         </div>

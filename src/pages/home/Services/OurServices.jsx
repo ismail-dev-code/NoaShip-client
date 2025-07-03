@@ -51,7 +51,7 @@ const OurServices = () => {
   return (
     <section className="py-12 px-4 md:px-8 lg:px-16 bg-base-100 text-base-content">
       <div className="text-center mb-10" data-aos="fade-up">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+        <h2 className="text-3xl font-bold mb-4">Our Services</h2>
         <p className="max-w-3xl mx-auto text-lg">
           Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From personal packages to business shipments — we deliver on time, every time.
         </p>

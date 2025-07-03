@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
-import useAxios from "../../../hooks/useAxiosSecure";
 import axios from "axios";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { toast } from "react-toastify";
@@ -14,7 +13,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const { createUser, updateProfile } = useAuth();
-  const axiosInstance = useAxios();
+ 
 
   const [profilePic, setProfilePic] = useState("");
   const [uploading, setUploading] = useState(false);

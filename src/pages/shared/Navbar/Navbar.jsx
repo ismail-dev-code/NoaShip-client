@@ -1,10 +1,10 @@
 import { Link, NavLink } from "react-router";
-import ProFastLogo from "../Profast/ProfastLogo";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useTheme from "../Theme/useTheme";
 import Swal from "sweetalert2";
+import NoaShipLogo from "../NoaShip/NoaShipLogo";
 
 const Navbar = () => {
   const { user, logOut, updateUser } = useAuth();
@@ -90,7 +90,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="text-xl">
-          <ProFastLogo />
+          <NoaShipLogo />
         </Link>
       </div>
 

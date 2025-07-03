@@ -1,6 +1,6 @@
-# 🚚 ProFast Client
+# 🚚 NoaShip Client
 
-**ProFast** is a modern parcel delivery and logistics client-side web application built with **React 19** and **Vite 6**. It provides a responsive, animated, and user-friendly interface for parcel tracking, customer feedback, business services, and more.
+**NoaShip** is a modern parcel delivery and logistics client-side web application built with **React 19** and **Vite 6**. It provides a responsive, animated, and user-friendly interface for parcel tracking, customer feedback, business services, and more.
 
 ---
 
@@ -45,7 +45,7 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/ismail-dev-code/profast-client.git
-cd profast-client
+git clone https://github.com/ismail-dev-code/NoaShip-client.git
+cd NoaShip-client
 
 

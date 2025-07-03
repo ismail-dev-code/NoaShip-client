@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
-import ProFastLogo from "../pages/shared/Profast/ProfastLogo";
 import {
   FaHome,
   FaBoxOpen,
@@ -16,6 +15,7 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
+import NoaShipLogo from "../pages/shared/NoaShip/NoaShipLogo";
 const DashboardLayout = () => {
   const { role, roleLoading } = useUserRole();
   return (
@@ -55,7 +55,7 @@ const DashboardLayout = () => {
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-64 min-h-full bg-base-200 space-y-2 text-base-content">
           <Link to={"/"}>
-            <ProFastLogo />
+            <NoaShipLogo />
           </Link>
           <li>
             <Link to="/dashboard" className="flex items-center gap-2">
@@ -91,38 +91,40 @@ const DashboardLayout = () => {
               <FaUserEdit /> Edit Profile
             </NavLink>
           </li>
-           {/* rider links */}
-                    {!roleLoading && role === 'rider' && <>
-                        <li>
-                            <NavLink to="/dashboard/pending-deliveries">
-                                <FaTasks className="inline-block" />
-                                Pending Deliveries
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/completed-deliveries">
-                                <FaCheckCircle className="inline-block" />
-                                Completed Deliveries
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/my-earnings">
-                                <FaWallet className="inline-block" />
-                                My Earnings
-                            </NavLink>
-                        </li>
-                    </>}
+          {/* rider links */}
+          {!roleLoading && role === "rider" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/pending-deliveries">
+                  <FaTasks className="inline-block" />
+                  Pending Deliveries
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/completed-deliveries">
+                  <FaCheckCircle className="inline-block" />
+                  Completed Deliveries
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/my-earnings">
+                  <FaWallet className="inline-block" />
+                  My Earnings
+                </NavLink>
+              </li>
+            </>
+          )}
           {/* admin links  */}
           {!roleLoading && role === "admin" && (
             <>
-            <li>
-  <NavLink
-    to="/dashboard/assign-rider"
-    className="flex items-center gap-2"
-  >
-    <FaMotorcycle /> Assign Rider
-  </NavLink>
-</li>
+              <li>
+                <NavLink
+                  to="/dashboard/assign-rider"
+                  className="flex items-center gap-2"
+                >
+                  <FaMotorcycle /> Assign Rider
+                </NavLink>
+              </li>
 
               <li>
                 <NavLink

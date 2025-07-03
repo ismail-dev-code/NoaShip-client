@@ -42,7 +42,7 @@ const Reviews = () => {
       {/* Section Header here*/}
       <div className="flex flex-col items-center text-center mb-12">
         <img src={reviewImg} alt="Customer Review" className="mb-4 w-28" />
-        <h2 className="text-4xl font-extrabold text-gray-800 mb-2">What Our Customers Are Saying</h2>
+        <h2 className="text-3xl font-extrabold text-gray-800 mb-2">What Our Customers Are Saying</h2>
         <p className="text-gray-600 max-w-2xl text-base md:text-lg">
           Enhance posture, mobility, and well-being effortlessly with Posture Pro. Achieve proper alignment, reduce pain, and strengthen your body with ease!
         </p>
