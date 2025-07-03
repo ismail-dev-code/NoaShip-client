@@ -3,9 +3,13 @@ import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useEffect } from "react";
 
 const SendParcel = () => {
   const serviceCenters = useLoaderData();
+   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   const {
     register,
     handleSubmit,
@@ -152,7 +156,7 @@ const SendParcel = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="max-w-5xl mx-auto p-4 mb-32">
       <h2 className="text-2xl font-bold mb-2">Add New Parcel</h2>
       <p className="mb-6 text-gray-500">
         Fill the form to schedule a pickup and delivery
@@ -364,7 +368,7 @@ const SendParcel = () => {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary text-black mt-4">
+        <button type="submit" className="btn btn-primary text-black ">
           Submit
         </button>
       </form>

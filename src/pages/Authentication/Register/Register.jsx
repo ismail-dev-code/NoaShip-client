@@ -81,6 +81,7 @@ const Register = () => {
       setUploading(false);
     }
   };
+  
 
   return (
     <div className="card max-w-md mx-auto px-4">

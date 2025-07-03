@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router";
 import Lottie from "lottie-react";
 import authLottie from "../assets/lottie/login_box.json";
 import NoaShipLogo from "../pages/shared/NoaShip/NoaShipLogo";
 
 const AuthLayout = () => {
+   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
-    <div className="min-h-screen px-6 pt-10">
+    <div className="w-8/12 mx-auto pt-10">
       <Link to={"/"} className="block">
         <NoaShipLogo />
       </Link>

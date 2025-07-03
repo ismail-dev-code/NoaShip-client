@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -103,11 +103,13 @@ const BeARider = () => {
       info: "",
     });
   };
-
+ useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 p-4 max-w-xl mx-auto shadow-md rounded-lg"
+      className="space-y-4 p-4 mb-32 max-w-xl mx-auto shadow-md rounded-lg"
     >
       <h2 className="text-2xl font-bold mb-2">Become a Rider</h2>
 

@@ -152,8 +152,8 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <Link to="/login" className="btn btn-sm mr-2 btn-outline hover:text-black btn-primary rounded-full px-6">Log In</Link>
-            <Link to="/register" className="btn btn-sm btn-outline hover:text-black btn-primary rounded-full px-6">Register</Link>
+            <Link to="/login" className="btn bg-primary text-black btn-sm mr-2 btn-outline hover:text-black btn-primary rounded-full px-6">Log In</Link>
+            <Link to="/register" className="btn btn-sm hover:bg-primary btn-outline hover:text-black btn-primary rounded-full px-6">Register</Link>
           </>
         )}
       </div>

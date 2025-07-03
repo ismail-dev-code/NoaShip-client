@@ -32,9 +32,10 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
 
   return (
-    <div className="max-w-md mx-auto px-4">
+    <div className="max-w-md mx-auto">
       <h2 className="text-3xl font-bold text-center mb-6">Welcome Back</h2>
 
       <form
