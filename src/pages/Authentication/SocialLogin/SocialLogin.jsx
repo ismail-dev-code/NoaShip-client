@@ -1,15 +1,13 @@
-import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import useAxios from "../../../hooks/useAxios";
+import axios from "axios";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from || "/";
-  const axiosInstance = useAxios();
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
@@ -19,14 +17,17 @@ const SocialLogin = () => {
 
         const userInfo = {
           email: user.email,
-           name: user.displayName,
+          name: user.displayName,
           role: "user",
           created_at: new Date().toISOString(),
           last_log_in: new Date().toISOString(),
         };
 
         try {
-          const res = await axiosInstance.post("/users", userInfo);
+          const res = await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL}/users`,
+            userInfo
+          );
           console.log("User saved to DB:", res.data);
           toast.success("Signed in successfully!");
           navigate(from);

@@ -37,7 +37,7 @@ const bannerData = [
 
 const Banner = () => {
   return (
-    <div className="w-full bg-white py-10 px-4 md:px-10 lg:px-20">
+    <div className="w-full py-10 px-4 md:px-10 lg:px-20">
       <Carousel
         autoPlay={true}
         infiniteLoop
@@ -66,10 +66,10 @@ const Banner = () => {
 
             {/* Text Content */}
             <div className="w-full md:w-1/2 text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 {item.title}
               </h2>
-              <p className="text-base md:text-lg text-gray-600 mb-6">
+              <p className="text-base md:text-lg mb-6">
                 {item.description}
               </p>
 

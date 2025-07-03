@@ -13,8 +13,6 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const { createUser, updateProfile } = useAuth();
- 
-
   const [profilePic, setProfilePic] = useState("");
   const [uploading, setUploading] = useState(false);
   const location = useLocation();
@@ -27,12 +25,12 @@ const Register = () => {
     }
 
     try {
-      // Step 1: Create Firebase User
+      //  Create Firebase User
       const result = await createUser(data.email, data.password);
       const createdUser = result.user;
       console.log("Firebase user:", createdUser);
 
-      // Step 2: Save user to your database
+      // Save user to database
       const userInfo = {
         email: data.email,
         name: data.name,
@@ -47,7 +45,7 @@ const Register = () => {
 
       console.log("User saved to DB:", res.data);
 
-      // Step 3: Update Firebase Profile
+      //  Update Firebase Profile
       const userProfile = {
         displayName: data.name,
         photoURL: profilePic,
