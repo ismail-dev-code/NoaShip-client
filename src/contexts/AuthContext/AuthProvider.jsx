@@ -7,7 +7,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
- updateProfile as firebaseUpdateProfile 
+  updateProfile as firebaseUpdateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 
@@ -24,12 +25,16 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+  const resetPassword = async (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email).finally(() => setLoading(false));
+  };
 
   const signInWithGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
- const updateProfile = (updatedData) => {
+  const updateProfile = (updatedData) => {
     return firebaseUpdateProfile(auth.currentUser, updatedData);
   };
   const logOut = () => {
@@ -54,7 +59,8 @@ const AuthProvider = ({ children }) => {
     logOut,
     user,
     loading,
-    updateProfile
+    updateProfile,
+    resetPassword,
   };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
