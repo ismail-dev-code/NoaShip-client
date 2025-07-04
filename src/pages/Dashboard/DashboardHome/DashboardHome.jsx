@@ -1,10 +1,11 @@
 
 import useUserRole from '../../../hooks/useUserRole';
-import Loading from '../../../components/Loading';
+
 import UserDashboard from './UserDashboard';
 import RiderDashboard from './RiderDashboard';
 import AdminDashboard from './AdminDashboard';
 import Forbidden from '../../Forbidden/Forbidden';
+import Loading from '../../shared/Loading/Loading';
 
 const DashboardHome = () => {
     const { role, roleLoading } = useUserRole();
