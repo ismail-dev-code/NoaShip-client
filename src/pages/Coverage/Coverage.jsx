@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import DistrictSearchBox from "./DistrictSearchBox";
 import BangladeshMap from "./BangladeshMap";
 
 const Coverage = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   const serviceCenters = useLoaderData();
   const [selectedLocation, setSelectedLocation] = useState(null);
 
