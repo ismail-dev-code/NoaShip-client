@@ -85,7 +85,7 @@ const DashboardLayout = () => {
           </li>
           <li>
             <NavLink
-              to="/dashboard/profile"
+              to="/dashboard/edit-profile"
               className="flex items-center gap-2"
             >
               <FaUserEdit /> Edit Profile

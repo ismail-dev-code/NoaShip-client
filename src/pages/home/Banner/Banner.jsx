@@ -37,7 +37,7 @@ const bannerData = [
 
 const Banner = () => {
   return (
-    <div className="w-10/12 mx-auto py-10 ">
+    <div className="w-10/12 mx-auto md:py-10 py-0 overflow-x-hidden">
       <Carousel
         autoPlay={true}
         infiniteLoop
@@ -53,7 +53,7 @@ const Banner = () => {
         {bannerData.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col md:flex-row items-center justify-between gap-8"
+            className="flex flex-col md:flex-row items-center justify-between md:gap-8"
           >
             {/* Lottie Animation */}
             <div className="w-full md:w-1/2 flex justify-center">
@@ -66,7 +66,7 @@ const Banner = () => {
 
             {/* Text Content */}
             <div className="w-full md:w-1/2 text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-2xl md:text-4xl font-bold mb-4">
                 {item.title}
               </h2>
               <p className="text-base md:text-lg mb-6">

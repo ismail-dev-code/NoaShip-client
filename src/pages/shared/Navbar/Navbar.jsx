@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import NoaShipLogo from "../NoaShip/NoaShipLogo";
 
 const Navbar = () => {
-  const { user, logOut, updateUser } = useAuth();
+  const { user, logOut } = useAuth();
   const [showModal, setShowModal] = useState(false);
  
 
@@ -69,8 +69,8 @@ const Navbar = () => {
 );
 
   return (
-    <div className="sticky top-0 z-50 shadow-sm bg-secondary">
-      <div className="navbar w-11/12 mx-auto text-white">
+    <div className="sticky top-0 md:z-50 shadow-sm bg-secondary">
+      <div className="navbar md:w-11/12 md:mx-auto text-white">
         <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -105,44 +105,9 @@ const Navbar = () => {
             </label>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li className="mb-1 px-2 text-sm text-gray-500">{user.displayName || user.email}</li>
-              <li>
-                <button
-                  onClick={() =>
-                    Swal.fire({
-                      title: "Edit Profile",
-                      html: `
-                        <input type="text" id="name" placeholder="Name" class="swal2-input" value="${user.displayName || ""}">
-                        <input type="text" id="photo" placeholder="Photo URL" class="swal2-input" value="${user.photoURL || ""}">
-                      `,
-                      confirmButtonText: "Update",
-                      showCancelButton: true,
-                      focusConfirm: false,
-                      preConfirm: () => {
-                        const name = document.getElementById("name").value;
-                        const photo = document.getElementById("photo").value;
-                        if (!name) {
-                          Swal.showValidationMessage("Name is required");
-                          return false;
-                        }
-                        return { displayName: name, photoURL: photo };
-                      },
-                    }).then(async (result) => {
-                      if (result.isConfirmed && result.value) {
-                        try {
-                          await updateUser(result.value);
-                          Swal.fire("Success!", "Profile updated successfully.", "success");
-                          location.reload();
-                        } catch (err) {
-                          console.error(err);
-                          Swal.fire("Error", "Failed to update profile.", "error");
-                        }
-                      }
-                    })
-                  }
-                >
-                  👤 Edit Profile
-                </button>
-              </li>
+            
+                
+            
               <li>
                 <button onClick={() => setShowModal(true)} className="text-red-600 hover:bg-red-100">
                   🔓 Log Out
@@ -153,7 +118,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link to="/login" className="btn bg-primary text-black btn-sm mr-2 btn-outline hover:text-black btn-primary rounded-full px-6">Log In</Link>
-            <Link to="/register" className="btn btn-sm hover:bg-primary btn-outline hover:text-black btn-primary rounded-full px-6">Register</Link>
+            <Link to="/register" className="btn btn-sm hover:bg-primary btn-outline md:flex hidden hover:text-black btn-primary rounded-full px-6">Register</Link>
           </>
         )}
       </div>

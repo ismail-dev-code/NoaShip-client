@@ -26,6 +26,8 @@ import PendingDeliveries from "../pages/Dashboard/PendingDeliveries/PendingDeliv
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import MyEarnings from "../pages/Dashboard/MyEarnings/MyEarnings";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import EditProfile from "../pages/EditProfile";
+import About from "../components/About";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "forbidden",
         Component: Forbidden,
+      },
+      {
+        path: "about",
+        Component: About,
       },
       {
         path: "beARider",
@@ -95,6 +101,10 @@ export const router = createBrowserRouter([
         element: <DashboardHome />,
       },
       {
+        path: "edit-profile",
+        element: <EditProfile />,
+      },
+      {
         path: "myParcels",
         element: <MyParcels />,
       },
@@ -112,25 +122,37 @@ export const router = createBrowserRouter([
       },
       // rider only routes
       {
-        path: 'pending-deliveries',
-        element: <RiderRoute><PendingDeliveries></PendingDeliveries></RiderRoute>
+        path: "pending-deliveries",
+        element: (
+          <RiderRoute>
+            <PendingDeliveries></PendingDeliveries>
+          </RiderRoute>
+        ),
       },
       {
-        path: 'completed-deliveries',
-        element: <RiderRoute>
-          <CompletedDeliveries></CompletedDeliveries>
-        </RiderRoute>
+        path: "completed-deliveries",
+        element: (
+          <RiderRoute>
+            <CompletedDeliveries></CompletedDeliveries>
+          </RiderRoute>
+        ),
       },
       {
-        path: 'my-earnings',
-        element: <RiderRoute>
-          <MyEarnings></MyEarnings>
-        </RiderRoute>
+        path: "my-earnings",
+        element: (
+          <RiderRoute>
+            <MyEarnings></MyEarnings>
+          </RiderRoute>
+        ),
       },
       // admin only routes
       {
-        path: 'assign-rider',
-        element: <AdminRoute><AssignRider/></AdminRoute>
+        path: "assign-rider",
+        element: (
+          <AdminRoute>
+            <AssignRider />
+          </AdminRoute>
+        ),
       },
       {
         path: "pendingRiders",

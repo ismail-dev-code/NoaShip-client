@@ -31,6 +31,16 @@ const UserDashboard = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
+  // Fetch user profile to get last_log_in
+  const { data: userProfile, isLoading: isUserLoading } = useQuery({
+    queryKey: ["userProfile", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/profile?email=${user.email}`);
+      return res.data;
+    },
+  });
+
   const { data: deliveryStatus = [], isLoading, isError, error } = useQuery({
     queryKey: ["userStatusCount", user?.email],
     enabled: !!user?.email,
@@ -67,7 +77,7 @@ const UserDashboard = () => {
     },
   });
 
-  if (isLoading || isLoadingPayments)
+  if (isLoading || isLoadingPayments || isUserLoading)
     return (
       <div className="flex justify-center items-center min-h-[70vh]">
         <span className="loading loading-spinner loading-lg text-primary"></span>
@@ -85,16 +95,21 @@ const UserDashboard = () => {
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Welcome, {user?.displayName || user?.email}</h1>
 
-      {/*  User Info */}
+      {/* User Info */}
       <div className="card bg-base-100 shadow-md p-6 border border-base-200 mb-6">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <FaUserAlt className="text-info" /> Your Info
         </h2>
         <p><strong>Email:</strong> {user?.email}</p>
-        <p><strong>Last Login:</strong> {moment().format("MMMM Do YYYY, h:mm:ss a")}</p>
+        <p>
+          <strong>Last Login:</strong>{" "}
+          {userProfile?.last_log_in
+            ? moment(userProfile.last_log_in).format("MMMM Do YYYY, h:mm:ss a")
+            : "No login info available"}
+        </p>
       </div>
 
-      {/*  Payment Summary */}
+      {/* Payment Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div className="card bg-base-100 shadow-md p-6 border border-base-200">
           <h2 className="text-lg font-semibold mb-2 flex items-center gap-2">
@@ -110,7 +125,7 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      {/*  Parcel Status */}
+      {/* Parcel Status */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         {deliveryStatus.map(({ count, status }) => (
           <div
@@ -126,7 +141,7 @@ const UserDashboard = () => {
         ))}
       </div>
 
-      {/*  Recent Parcels */}
+      {/* Recent Parcels */}
       <div className="card bg-base-100 shadow-md p-6 mb-6">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
           <FaBox /> Recent Parcels
@@ -139,8 +154,6 @@ const UserDashboard = () => {
                 <th>Cost</th>
                 <th>Status</th>
                 <th>Date and Time</th>
-               
-
               </tr>
             </thead>
             <tbody>
@@ -149,8 +162,7 @@ const UserDashboard = () => {
                   <td>{parcel.trackingId}</td>
                   <td>${parcel.cost}</td>
                   <td>{parcel.deliveryStatus}</td>
-                  <td>{parcel.creation_date}{moment(parcel.creation_date).format("LLL")}</td>
-               
+                  <td>{moment(parcel.creation_date).format("LLL")}</td>
                 </tr>
               ))}
             </tbody>
@@ -158,7 +170,7 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      {/*  Recent Payments */}
+      {/* Recent Payments */}
       <div className="card bg-base-100 shadow-md p-6">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
           <FaHistory /> Recent Payments
