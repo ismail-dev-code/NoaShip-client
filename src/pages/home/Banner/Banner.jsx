@@ -37,7 +37,7 @@ const bannerData = [
 
 const Banner = () => {
   return (
-    <div className="w-full py-10 px-4 md:px-10 lg:px-20">
+    <div className="w-10/12 mx-auto py-10 ">
       <Carousel
         autoPlay={true}
         infiniteLoop

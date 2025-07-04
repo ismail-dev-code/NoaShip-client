@@ -16,7 +16,6 @@ import TrackParcel from "../pages/Dashboard/TrackParcel/TrackParcel";
 import BeARider from "../pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
-import DashboardHome from "../pages/home/DashboardHome";
 import MakeAdmin from "../pages/Dashboard/MakeAdmin/MakeAdmin";
 import Forbidden from "../pages/Forbidden/Forbidden";
 import AdminRoute from "../routes/AdminRoute";
@@ -90,10 +89,10 @@ export const router = createBrowserRouter([
     ),
 
     children: [
-      {
-        index: true,
-        element: <DashboardHome />,
-      },
+      // {
+      //   index: true,
+      //   element: <DashboardHome />,
+      // },
       {
         path: "myParcels",
         element: <MyParcels />,
