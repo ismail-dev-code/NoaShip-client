@@ -39,16 +39,18 @@ const Banner = () => {
   return (
     <div className="w-10/12 mx-auto md:py-10 py-0 overflow-x-hidden">
       <Carousel
-        autoPlay={true}
+        autoPlay
         infiniteLoop
         showThumbs={false}
         showStatus={false}
         showIndicators={false}
-        interval={9000}
+        interval={3000}
         transitionTime={800}
         swipeable
         emulateTouch
         className="w-full"
+        preventMovementUntilSwipeScrollTolerance
+        swipeScrollTolerance={50} 
       >
         {bannerData.map((item, index) => (
           <div
@@ -56,11 +58,11 @@ const Banner = () => {
             className="flex flex-col md:flex-row items-center justify-between md:gap-8"
           >
             {/* Lottie Animation */}
-            <div className="w-full md:w-1/2 flex justify-center">
+            <div className="w-full md:w-1/2 flex justify-center touch-auto">
               <Lottie
                 animationData={item.animation}
-                loop={true}
-                className="w-full h-[500px]" 
+                loop
+                className="w-full h-[500px] pointer-events-none" 
               />
             </div>
 
@@ -69,13 +71,11 @@ const Banner = () => {
               <h2 className="text-2xl md:text-4xl font-bold mb-4">
                 {item.title}
               </h2>
-              <p className="text-base md:text-lg mb-6">
-                {item.description}
-              </p>
+              <p className="text-base md:text-lg mb-6">{item.description}</p>
 
               <Link
                 to={item.buttonLink}
-                className="inline-block px-6 py-2 bg-primary text-black font-medium rounded-md hover:select-secondary transition"
+                className="inline-block px-6 py-2 bg-primary text-black font-medium rounded-md hover:bg-secondary transition"
               >
                 {item.buttonText}
               </Link>

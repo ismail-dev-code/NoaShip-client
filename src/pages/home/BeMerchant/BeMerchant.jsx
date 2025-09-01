@@ -4,7 +4,7 @@ import merchantImg from "../../../assets/location-merchant.png";
 
 const BeMerchant = () => {
   return (
-    <section data-aos="flip-up" className="bg-[#03373D] bg-[url('assets/be-a-merchant-bg.png')] bg-no-repeat rounded-2xl max-w-5xl mx-auto my-24 px-0 md:px-0 lg:px-0 text-white overflow-hidden">
+    <section className="bg-[#03373D] bg-[url('assets/be-a-merchant-bg.png')] bg-no-repeat rounded-2xl max-w-5xl mx-auto my-24 px-0 md:px-0 lg:px-0 text-white overflow-hidden">
       {/* Content Area */}
       <div className="px-4 md:px-8 lg:px-16 py-12 flex flex-col lg:flex-row-reverse items-center">
         {/* Right Side Image */}
